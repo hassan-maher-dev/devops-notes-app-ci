@@ -19,7 +19,7 @@ pipeline {
                 echo " Checking out repository..."
 
                 // غير هذا الرابط برابط المستودع الخاص بتطبيق الملاحظات
-                git branch: 'main', url: 'https://github.com/hassan-maher-dev/NotesApp.git'
+                git branch: 'main', url: 'https://github.com/hassan-maher-dev/devops-notes-app-ci.git'
 
             }
 
