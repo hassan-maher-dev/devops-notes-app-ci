@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps Notes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Glass Card */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Input */
+textarea {
+    width: 100%;
+    height: 120px;
+    border-radius: 10px;
+    border: none;
+    padding: 15px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Button */
+button {
+    background: #3b82f6;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+/* Notes */
+.note {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.time {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-bottom: 5px;
+}
+
+.delete {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: red;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+/* Empty state */
+.empty {
+    text-align: center;
+    opacity: 0.6;
+    margin-top: 40px;
+}
+
+/* Toast */
+.toast {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.success { background: #16a34a; }
+.error { background: #dc2626; }
+
+</style>
+</head>
+
+<body>
+
+<h1>  DevOps Notes</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, msg in messages %}
+      <div class="toast {{category}}">{{msg}}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="card">
+    <form method="post">
+        <textarea name="content" placeholder="Write something..."></textarea>
+        <button type="submit">Save Note</button>
+    </form>
+</div>
+
+{% if notes %}
+    {% for note in notes %}
+        <div class="card note">
+            <div class="time">{{note.timestamp}}</div>
+            <div>{{note.content}}</div>
+
+            <form action="/delete/{{note.id}}" method="post">
+                <button class="delete">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="empty">No notes yet... start writing ✍️</div>
+{% endif %}
+
+</body>
+</html>
